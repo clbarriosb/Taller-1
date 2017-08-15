@@ -14,15 +14,45 @@ import java.util.Scanner;
  */
 public class GCDString1 {
 
-    public static int method(int a) {
-        int bin = (int) Math.pow(10, a - 1);
+    public static String method(int a, int b, int[] times, String bin, int i) {
+//        System.out.println("i " + i);
+        times[i] = a;
+//        System.out.println("times[i] = " + times[i] + " i " + i);
+        if (a % b == 0) {
+            for (int j = 0; j < (a - 1); j++) {
+                bin = bin + "0";
+//                System.out.println(bin);
+//                System.out.println("i " + i);
+            }
+        } else {
+//            System.out.println("entre");
+            int p = a % b;
+            a = b;
+            b = p;
+            i = i + 1;
+//            System.out.println("a " +a + " b " + b + " i " + i );
+            return method(a, b, times, bin, i);
+        }
+//        System.out.println("hola");
+        for (int q = i; q >= 0; q--) {
+//            System.out.println("q " + q + " times " + times[q]);
+            bin = createString(bin, times[q]);
+        }
+
         return bin;
     }
 
     public static String createString(String n, int p) {
-        for (int i = 0; i <= p; i++) {
+        double length = p / n.length();
+//        System.out.println("p " + p + " length n " + n.length() + " length " + length);
+
+        for (int i = 0; i < (Math.ceil(length)); i++) {
+//            System.out.println("i " + i);
             n = n + n;
+//            System.out.println(n);
         }
+        n = n.substring(0, p);
+//        System.out.println("n cut " + n);
         return n;
     }
 
@@ -41,24 +71,15 @@ public class GCDString1 {
             x[i] = scan.nextInt();
             y[i] = scan.nextInt();
         }
+        int[] times = new int[1000];
+        String bin = "1";
+        int m = 0;
         for (int i = 0; i < samples; i++) {
-            int u = y[i];
             int o = x[i];
-            if (x[i] % y[i] == 0 && x[i] >= y[i]) {
-                int num = method(o);
-                String binary = Integer.toString(num);
-                int length = o / binary.length();
-                String finalBinary = createString(binary, length);
-                finalBinary = finalBinary.substring(0, o);
-                result(finalBinary);
-            } else {
-                int num = method(u);
-                String binary = Integer.toString(num);
-                int length = u / binary.length();
-                String finalBinary = createString(binary, length);
-                finalBinary = finalBinary.substring(0, o);
-                result(finalBinary);
-
+            int u = y[i];
+            if (x[i] >= y[i]) {
+                String num = method(o, u, times, bin, m);
+                result(num);
             }
         }
 
