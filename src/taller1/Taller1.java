@@ -25,14 +25,14 @@ public class Taller1 {
         for (int j = 0; j < test; j++) {
             arrayTest[j] = scan.nextInt();
         }
+        
+        int[] memory = new int [100000];
+        for (int j = 0; j < n; j++) {
+            memory[(array[j])]+=1; 
+        }
 
         for (int j = 0; j < test; j++) {
-            int app = 0;
-            for (int i = 0; i < n; i++) {
-                if (arrayTest[j] == array[i]) {
-                    app = app + 1;
-                }
-            }
+            int app = memory[arrayTest[j]];
             if (app == 0) {
                 System.out.println("NOT PRESENT");
             } else {
